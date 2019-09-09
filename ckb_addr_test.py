@@ -7,9 +7,9 @@
 import segwit_addr as sa
 
 
-format_type_SHORT     = 0x01
-format_type_FULL_DATA = 0x02
-format_type_FULL_TYPE = 0x04
+FORMAT_TYPE_SHORT     = 0x01
+FORMAT_TYPE_FULL_DATA = 0x02
+FORMAT_TYPE_FULL_TYPE = 0x04
 
 CODE_INDEX_SECP256K1 = 0x00
 
@@ -17,7 +17,7 @@ def generateShortAddress(pk, network = "mainnet"):
     """ generate a standard secp256k1 short ckb address """
     hrp = {"mainnet": "ckb", "testnet": "ckt"}[network]
     hrpexp =  sa.bech32_hrp_expand(hrp)
-    format_type  = format_type_SHORT
+    format_type  = FORMAT_TYPE_SHORT
     code_index = CODE_INDEX_SECP256K1
     payload = bytes([format_type, code_index]) + bytes.fromhex(pk)
     data_part = sa.convertbits(payload, 8, 5)
@@ -29,8 +29,8 @@ def generateShortAddress(pk, network = "mainnet"):
     return addr
 
 def generateFullAddress(hash_type, code_hash, args, network = "mainnet"):
-    format_type = {"Data" : bytes([format_type_FULL_DATA]), 
-                 "Type" : bytes([format_type_FULL_TYPE])}[hash_type]
+    format_type = {"Data" : bytes([FORMAT_TYPE_FULL_DATA]), 
+                 "Type" : bytes([FORMAT_TYPE_FULL_TYPE])}[hash_type]
     hrp = {"mainnet": "ckb", "testnet": "ckt"}[network]
     hrpexp =  sa.bech32_hrp_expand(hrp)
     payload = bytes(format_type) + bytes.fromhex(code_hash)
@@ -60,12 +60,12 @@ def decodeAddress(addr, network = "mainnet"):
         return False
     payload = bytes(decoded)
     format_type = payload[0]
-    if format_type == format_type_SHORT:
+    if format_type == FORMAT_TYPE_SHORT:
         code_index = payload[1]
         pk = payload[2:].hex()
         return ("short", code_index, pk)
-    elif format_type == format_type_FULL_DATA or format_type == format_type_FULL_TYPE:
-        full_type = {format_type_FULL_DATA:"Data", format_type_FULL_TYPE:"Type"}[format_type]
+    elif format_type == FORMAT_TYPE_FULL_DATA or format_type == FORMAT_TYPE_FULL_TYPE:
+        full_type = {FORMAT_TYPE_FULL_DATA:"Data", FORMAT_TYPE_FULL_TYPE:"Type"}[format_type]
         ptr = 1
         code_hash = payload[ptr : ptr+32].hex()
         ptr += 32
