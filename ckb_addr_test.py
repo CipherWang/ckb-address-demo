@@ -29,7 +29,7 @@ def generateShortAddress(pk, network = "mainnet"):
     return addr
 
 def generateFullAddress(hash_type, code_hash, args, network = "mainnet"):
-    format_type = {"Data" : bytes([FORMAT_TYPE_FULL_DATA]), 
+    format_type = {"Data" : bytes([FORMAT_TYPE_FULL_DATA]),
                  "Type" : bytes([FORMAT_TYPE_FULL_TYPE])}[hash_type]
     hrp = {"mainnet": "ckb", "testnet": "ckt"}[network]
     hrpexp =  sa.bech32_hrp_expand(hrp)
@@ -37,7 +37,7 @@ def generateFullAddress(hash_type, code_hash, args, network = "mainnet"):
     for arg in args:
         arg_bytes = bytes.fromhex(arg)
         len_arg = len(arg_bytes)
-        if len_arg > 256 or len_arg == 0:
+        if len_arg > 256:
             return None
         else:
             payload += bytes([len_arg]) + arg_bytes
@@ -81,9 +81,9 @@ if __name__ == "__main__":
     # test constant parameters
     SECP256K1_CODE_HASH = "48a2ce278d84e1102b67d01ac8a23b31a81cc54e922e3db3ec94d2ec4356c67c"
     MULTI_PK1 = "dde7801c073dfb3464c7b1f05b806bb2bbb84e99"
-    MULTI_PK2 = "00c1ddf9c135061b7635ca51e735fc2b03cee339" 
+    MULTI_PK2 = "00c1ddf9c135061b7635ca51e735fc2b03cee339"
     SINGLE_PK = "13e41d6F9292555916f17B4882a5477C01270142"
-    
+
     # test short address functions
     print("== short address test ==")
     print("sample pk to encode:\t", SINGLE_PK)
@@ -94,7 +94,7 @@ if __name__ == "__main__":
     print(" - format type:\t", decoded[0])
     print(" - code index:\t", decoded[1])
     print(" - pk string:\t", decoded[2])
-    
+
     # test full address functions
     print("\n== full address test ==")
     code_hash = SECP256K1_CODE_HASH
@@ -109,10 +109,24 @@ if __name__ == "__main__":
     print(" - code type:\t", decoded[1])
     print(" - code_hash:\t", decoded[2])
     print(" - args array:\t", decoded[3])
-    
-    
-    
-    
-    
-    
-    
+
+    # test full address functions when has empty args
+    print("\n== full address test2 ==")
+    code_hash = SECP256K1_CODE_HASH
+    args = [MULTI_PK1, MULTI_PK2, "", ""]
+    print("code_hash to encode:\t", code_hash)
+    print("with args to encode:\t", args)
+    addr_full = generateFullAddress("Data", code_hash, args)
+    print("full address generate:\t", addr_full)
+    decoded = decodeAddress(addr_full)
+    print("decode address:")
+    print(" - format type:\t", decoded[0])
+    print(" - code type:\t", decoded[1])
+    print(" - code_hash:\t", decoded[2])
+    print(" - args array:\t", decoded[3])
+
+
+
+
+
+
