@@ -4,22 +4,21 @@ CKB address format demo code.
 
 Based on original Bech32 demo code form: https://github.com/sipa/bech32/tree/master/ref/python
 
-```
+```yml
 == short address test ==
-sample pk to encode:        13e41d6F9292555916f17B4882a5477C01270142
-short address generate:    ckb1qyqp8eqad7ffy42ezmchkjyz54rhcqf8q9pqrn323p
+sample args to encode:   b39bbc0b3673c7d36450bc14cfcdad2d559c6c64
+short address generate:  ckb1qyqt8xaupvm8837nv3gtc9x0ekkj64vud3jqfwyw5v
 decode address:
-    - format type:      short
-    - code index:        0
-    - pk string:            13e41d6f9292555916f17b4882a5477c01270142
+ - format type:  short
+ - code index:   0
+ - args:         b39bbc0b3673c7d36450bc14cfcdad2d559c6c64
 
 == full address test ==
-code_hash to encode:     48a2ce278d84e1102b67d01ac8a23b31a81cc54e922e3db3ec94d2ec4356c67c
-with args to encode:         ['dde7801c073dfb3464c7b1f05b806bb2bbb84e99', '00c1ddf9c135061b7635ca51e735fc2b03cee339']
-full address generate:      ckb1qfy29n383kzwzyptvlgp4j9z8vc6s8x9f6fzu0dnaj2d9mzr2mr8c9xau7qpcpealv6xf3a37pdcq6ajhwuyaxg5qrqam7wpx5rpka34efg7wd0u9vpuaceeu5fsh5
+code_hash to encode:     9bd7e06f3ecf4be0f2fcd2188b23f1b9fcc88e5d4b65a8637b17723bbda3cce8
+with args to encode:     b39bbc0b3673c7d36450bc14cfcdad2d559c6c64
+full address generate:   ckb1qjda0cr08m85hc8jlnfp3zer7xulejywt49kt2rr0vthywaa50xw3vumhs9nvu786dj9p0q5elx66t24n3kxgj53qks
 decode address:
-    - format type:      full
-    - code type:          Data
-    - code_hash:        48a2ce278d84e1102b67d01ac8a23b31a81cc54e922e3db3ec94d2ec4356c67c
-    - args array:          ['dde7801c073dfb3464c7b1f05b806bb2bbb84e99', '00c1ddf9c135061b7635ca51e735fc2b03cee339']
- ```
+ - format type:  full
+ - code type:    Type
+ - code_hash:    9bd7e06f3ecf4be0f2fcd2188b23f1b9fcc88e5d4
+```
