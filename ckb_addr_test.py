@@ -34,13 +34,7 @@ def generateFullAddress(hash_type, code_hash, args, network = "mainnet"):
     hrp = {"mainnet": "ckb", "testnet": "ckt"}[network]
     hrpexp =  sa.bech32_hrp_expand(hrp)
     payload = bytes(format_type) + bytes.fromhex(code_hash)
-    for arg in args:
-        arg_bytes = bytes.fromhex(arg)
-        len_arg = len(arg_bytes)
-        if len_arg > 256:
-            return None
-        else:
-            payload += bytes([len_arg]) + arg_bytes
+    payload += bytes.fromhex(args)
     data_part = sa.convertbits(payload, 8, 5)
     values = hrpexp + data_part
     polymod = sa.bech32_polymod(values + [0, 0, 0, 0, 0, 0]) ^ 1
@@ -69,61 +63,41 @@ def decodeAddress(addr, network = "mainnet"):
         ptr = 1
         code_hash = payload[ptr : ptr+32].hex()
         ptr += 32
-        args = []
-        while ptr < len(payload):
-            arg_len = int(payload[ptr])
-            ptr += 1
-            args.append(payload[ptr : ptr+arg_len].hex())
-            ptr += arg_len
+        args = payload[ptr :].hex()
         return ("full", full_type, code_hash, args)
 
 if __name__ == "__main__":
     # test constant parameters
-    SECP256K1_CODE_HASH = "48a2ce278d84e1102b67d01ac8a23b31a81cc54e922e3db3ec94d2ec4356c67c"
-    MULTI_PK1 = "dde7801c073dfb3464c7b1f05b806bb2bbb84e99"
-    MULTI_PK2 = "00c1ddf9c135061b7635ca51e735fc2b03cee339"
-    SINGLE_PK = "13e41d6F9292555916f17B4882a5477C01270142"
+    SECP256K1_CODE_HASH = "9bd7e06f3ecf4be0f2fcd2188b23f1b9fcc88e5d4b65a8637b17723bbda3cce8"
+    PKBLAKE160 = "b39bbc0b3673c7d36450bc14cfcdad2d559c6c64"
 
     # test short address functions
     print("== short address test ==")
-    print("sample pk to encode:\t", SINGLE_PK)
-    addr_short = generateShortAddress(SINGLE_PK)
+    args = PKBLAKE160
+    print("sample args to encode:\t", args)
+    addr_short = generateShortAddress(args)
     print("short address generate:\t", addr_short)
     decoded = decodeAddress(addr_short)
     print("decode address:")
     print(" - format type:\t", decoded[0])
     print(" - code index:\t", decoded[1])
-    print(" - pk string:\t", decoded[2])
+    print(" - args:\t", decoded[2])
 
     # test full address functions
     print("\n== full address test ==")
     code_hash = SECP256K1_CODE_HASH
-    args = [MULTI_PK1, MULTI_PK2]
+    args = PKBLAKE160
     print("code_hash to encode:\t", code_hash)
     print("with args to encode:\t", args)
-    addr_full = generateFullAddress("Data", code_hash, args)
+    addr_full = generateFullAddress("Type", code_hash, args)
     print("full address generate:\t", addr_full)
     decoded = decodeAddress(addr_full)
     print("decode address:")
     print(" - format type:\t", decoded[0])
     print(" - code type:\t", decoded[1])
     print(" - code_hash:\t", decoded[2])
-    print(" - args array:\t", decoded[3])
+    print(" - args:\t", decoded[3])
 
-    # test full address functions when has empty args
-    print("\n== full address test2 ==")
-    code_hash = SECP256K1_CODE_HASH
-    args = [MULTI_PK1, MULTI_PK2, "", ""]
-    print("code_hash to encode:\t", code_hash)
-    print("with args to encode:\t", args)
-    addr_full = generateFullAddress("Data", code_hash, args)
-    print("full address generate:\t", addr_full)
-    decoded = decodeAddress(addr_full)
-    print("decode address:")
-    print(" - format type:\t", decoded[0])
-    print(" - code type:\t", decoded[1])
-    print(" - code_hash:\t", decoded[2])
-    print(" - args array:\t", decoded[3])
 
 
 
