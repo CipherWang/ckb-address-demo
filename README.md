@@ -20,5 +20,6 @@ full address generate:   ckb1qjda0cr08m85hc8jlnfp3zer7xulejywt49kt2rr0vthywaa50x
 decode address:
  - format type:  full
  - code type:    Type
- - code_hash:    9bd7e06f3ecf4be0f2fcd2188b23f1b9fcc88e5d4
+ - code_hash:    9bd7e06f3ecf4be0f2fcd2188b23f1b9fcc88e5d4b65a8637b17723bbda3cce8
+ - args:         b39bbc0b3673c7d36450bc14cfcdad2d559c6c64
 ```
