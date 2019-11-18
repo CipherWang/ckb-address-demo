@@ -78,7 +78,7 @@ if __name__ == "__main__":
     PKBLAKE_Alice = "094ee28566dff02a012a66505822a2fd67d668fb"
     PKBLAKE_Bob = "4643c241e59e81b7876527ebff23dfb24cf16482"
     PKBLAKE_Cipher = "bd07d9f32bce34d27152a6a0391d324f79aab854"
-    MULTI_SISG_PREFIX = b'1' + b'2' + b'3'
+    MULTI_SISG_PREFIX = b'0' + b'1' + b'2' + b'3'
 
     # test short address (code_hash_index = 0x00) functions
     print("== short address (code_hash_index = 0x00) test ==")

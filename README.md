@@ -14,8 +14,8 @@ address generate:        ckb1qyqt8xaupvm8837nv3gtc9x0ekkj64vud3jqfwyw5v
  - args:                 b39bbc0b3673c7d36450bc14cfcdad2d559c6c64
 
 == short address (code_hash_index = 0x01) test ==
-multi sign script:       313233bd07d9f32bce34d27152a6a0391d324f79aab854094ee28566dff02a012a66505822a2fd67d668fb4643c241e59e81b7876527ebff23dfb24cf16482
-args to encode:          60e0238f78f665e570861a03d899757f9dbe93bf
+multi sign script:       30313233bd07d9f32bce34d27152a6a0391d324f79aab854094ee28566dff02a012a66505822a2fd67d668fb4643c241e59e81b7876527ebff23dfb24cf16482
+args to encode:          38c0ae47fd1ab954d97beb873fb54ee3670b742a
 address generate:        ckb1qyqkpcpr3au0ve09wzrp5q7cn96hl8d7jwls47g2ys
 >> decode address:
  - format type:          short
